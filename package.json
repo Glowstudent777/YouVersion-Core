@@ -4,6 +4,7 @@
   "description": "The core of the YouVersion API projects",
   "scripts": {
     "build": "tsc",
+    "format:versions": "ts-node util/sortVersions.ts db/versions.json asc",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
   },
