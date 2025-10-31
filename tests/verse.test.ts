@@ -1,6 +1,7 @@
 import { getVerse } from "../src/verse";
 import { expect, it, describe } from "vitest";
 import type { FullChapterResult, SingleVerseResult } from "../src/types";
+import exp from "constants";
 
 const expectFullChapter = (result: any): result is FullChapterResult => {
   return "verses" in result && "title" in result;
@@ -53,6 +54,22 @@ describe("getVerse", () => {
     expect(result.title).toBe("A Psalm of David.");
 
     expect(result.verses[1]).toBe("The LORD is my shepherd; I shall not want.");
+  }, 10_000);
+
+  it("Genesis 1:1-5 (multiple verses, BIBEL.HEUTE)", async () => {
+    const result = await getVerse("Genesis", "1", "1-5", "BiBEl.hEuTe");
+
+    if (!expectSingleVerse(result)) {
+      throw new Error("Expected single verse result");
+    }
+
+    expect(result.citation).toBe("1. Mose 1:1-5");
+
+    expect(result.passage).toContain("Im Anfang schuf Gott Himmel und Erde.");
+    expect(result.passage).toContain("Die Erde war formlos und leer.");
+    expect(result.passage).toContain(
+      "Finsternis lag über der Tiefe, und der Geist Gottes schwebte über dem Wasser."
+    );
   }, 10_000);
 
   it("Invalid book returns error", async () => {
