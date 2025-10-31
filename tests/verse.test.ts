@@ -1,7 +1,6 @@
 import { getVerse } from "../src/verse";
 import { expect, it, describe } from "vitest";
 import type { FullChapterResult, SingleVerseResult } from "../src/types";
-import exp from "constants";
 
 const expectFullChapter = (result: any): result is FullChapterResult => {
   return "verses" in result && "title" in result;
